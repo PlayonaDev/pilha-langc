@@ -51,16 +51,60 @@ int desempilhar(struct Pilha* p)
   return elemento;
 }
 
+int topo(struct Pilha* p)
+{
+  assert(p != NULL);
+  assert(p->topo != NULL);
+  struct No* topo = p->topo;
+  return topo->info;
+}
+
+int tamanho(struct Pilha *p)
+{
+  assert(p != NULL);
+  return p->tamanho;
+}
+
+bool vazia(struct Pilha* p)
+{
+  assert(p != NULL);
+  return (p->topo == NULL);
+}
+
+void liberar(struct Pilha* p)
+{
+  assert(p != NULL);
+  while(vazia(p) == false)
+  {
+    desempilhar(p);
+  }
+  free(p);
+}
+
 int main()
 {
   struct Pilha* minha_pilha = criar();
+
+  printf("Está vazia (1 - SIM; 0 - NÃO)? %d\n", vazia(minha_pilha));
+  
+  printf("Empilhando 1...\n");
   empilhar(minha_pilha, 1);
+  printf("Empilhando 2...\n");
   empilhar(minha_pilha, 2);
+  printf("Empilhando 3...\n");
   empilhar(minha_pilha, 3);
 
+  printf("Está vazia (1 - SIM; 0 - NÃO)? %d\n", vazia(minha_pilha));
+  
+  printf("Topo = %d\n", topo(minha_pilha));
+  printf("Tamanho = %d\n", tamanho(minha_pilha));
+
+  printf("Desempilhando elementos: ");
   printf("%d", desempilhar(minha_pilha));
   printf("%d", desempilhar(minha_pilha));
   printf("%d", desempilhar(minha_pilha));
+
+  liberar(minha_pilha);
   
   return 0;
 }
